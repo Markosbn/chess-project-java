@@ -1,5 +1,6 @@
 package application;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -45,6 +46,13 @@ public class UI {
         }catch (RuntimeException e){
             throw new InputMismatchException("Error instantiating ChessPosition. Valid values are from a1 to h8.");
         }
+    }
+
+    public static void printMatch(ChessMatch chessMatch){
+        printBoard(chessMatch.getPieces());
+        System.out.println();
+        System.out.print("Turn: " + chessMatch.getTurn() + "\n");
+        System.out.print("Waiting player: " + chessMatch.getCurrentPlayer());
     }
 
     public static void printBoard(ChessPiece[][] pieces){
