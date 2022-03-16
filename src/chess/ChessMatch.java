@@ -71,7 +71,7 @@ public class ChessMatch {
         Piece capturedPiece = makeMove(source, target);
         if (testCheck(currentPlayer)){
             undoMove(source, target, capturedPiece);
-            throw new ChessException("You can't put yoursel inf chek!!");
+            throw new ChessException("You can't put yoursel in check!!");
         }
         check = (testCheck(opponent(currentPlayer))) ? true : false;
         if (testCheckMate(opponent(currentPlayer))){
@@ -83,7 +83,8 @@ public class ChessMatch {
     }
 
     private Piece makeMove(Position source, Position target) {
-        Piece movedPiece = board.removePiece(source);
+        ChessPiece movedPiece = (ChessPiece) board.removePiece(source);
+        movedPiece.increaseMoveCount();
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(movedPiece, target);
         if (capturedPiece != null){
@@ -94,9 +95,9 @@ public class ChessMatch {
     }
 
     private void undoMove(Position source, Position target, Piece capturedPiece){
-         Piece p = board.removePiece(target);
-         board.placePiece(p, source);
-
+         ChessPiece movedPiece = (ChessPiece) board.removePiece(target);
+         movedPiece.decreaseMoveCount();
+         board.placePiece(movedPiece, source);
          if (capturedPiece != null){
              board.placePiece(capturedPiece, target);
              capturedPieces.remove(capturedPiece);
