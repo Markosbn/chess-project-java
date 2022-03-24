@@ -5,10 +5,7 @@ import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.exceptions.ChessException;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
 
@@ -37,6 +34,16 @@ public class Application {
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
                 if (capturedPiece != null){
                     captured.add(capturedPiece);
+                }
+
+                if (chessMatch.getPromoted() != null){
+                    System.out.print("Enter piece for promotion (B/H/R/Q): ");
+                    String type = sc.nextLine().toUpperCase();
+                    while (!type.equals("B") && !type.equals("H") && !type.equals("R") && !type.equals("Q")){
+                        System.out.print("Invalid value!! Enter piece for promotion (B/H/R/Q): ");
+                        type = sc.nextLine().toUpperCase();
+                    }
+                    chessMatch.replacePromotedPiece(type);
                 }
             }catch (ChessException e){
                 System.out.println(e.getMessage());
